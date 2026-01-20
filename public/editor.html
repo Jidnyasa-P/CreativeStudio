@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor - AI Meme & Poster Creator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand"><a href="index.html">🎨 Meme Creator</a></div>
+            <div class="nav-links">
+                <a href="generator.html">Templates</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="editor-container">
+        <!-- Canvas Area -->
+        <div class="canvas-area">
+            <div class="canvas-wrapper">
+                <canvas id="canvas" width="600" height="600"></canvas>
+                <div class="text-boxes-container" id="textBoxesContainer"></div>
+            </div>
+        </div>
+
+        <!-- Sidebar Controls -->
+        <div class="editor-sidebar">
+            <h2>Editor Controls</h2>
+
+            <!-- AI Caption Generator -->
+            <div class="control-panel">
+                <h3>🤖 AI Caption Generator</h3>
+                
+                <div class="form-group">
+                    <label for="topic">Topic:</label>
+                    <input type="text" id="topic" placeholder="e.g., cats, coding, mondays" value="meme">
+                </div>
+
+                <div class="form-group">
+                    <label for="tone">Tone:</label>
+                    <select id="tone">
+                        <option value="funny">Funny</option>
+                        <option value="inspirational">Inspirational</option>
+                        <option value="sarcastic">Sarcastic</option>
+                        <option value="casual">Casual</option>
+                        <option value="professional">Professional</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-secondary" id="generateBtn" onclick="generateCaptions()">Generate Captions</button>
+
+                <div id="captionsResults" class="captions-results" style="display: none;">
+                    <p class="captions-label">Choose a caption:</p>
+                    <div id="captionsList"></div>
+                </div>
+
+                <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+                    <p>Generating captions...</p>
+                </div>
+            </div>
+
+            <!-- Text Formatting -->
+            <div class="control-panel">
+                <h3>✏️ Text Formatting</h3>
+
+                <div class="form-group">
+                    <label for="fontFamily">Font:</label>
+                    <select id="fontFamily" onchange="updateActiveTextBox('fontFamily', this.value)">
+                        <option value="Arial">Arial</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Comic Sans MS">Comic Sans</option>
+                        <option value="Impact">Impact</option>
+                        <option value="Courier New">Courier</option>
+                        <option value="Verdana">Verdana</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fontSize">Size:</label>
+                    <input type="range" id="fontSize" min="12" max="80" value="24" onchange="updateActiveTextBox('fontSize', this.value)">
+                    <span id="fontSizeValue">24</span>px
+                </div>
+
+                <div class="form-group">
+                    <label for="textColor">Text Color:</label>
+                    <input type="color" id="textColor" value="#ffffff" onchange="updateActiveTextBox('color', this.value)">
+                </div>
+
+                <div class="form-group">
+                    <label for="strokeColor">Stroke Color:</label>
+                    <input type="color" id="strokeColor" value="#000000" onchange="updateActiveTextBox('strokeColor', this.value)">
+                </div>
+
+                <div class="form-group">
+                    <label for="strokeWidth">Stroke Width:</label>
+                    <input type="range" id="strokeWidth" min="0" max="5" step="0.5" value="2" onchange="updateActiveTextBox('strokeWidth', this.value)">
+                    <span id="strokeWidthValue">2</span>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="control-panel">
+                <h3>📥 Actions</h3>
+                <button class="btn btn-primary" onclick="downloadCanvas()">⬇️ Download as PNG</button>
+                <button class="btn btn-secondary" onclick="window.location.href='generator.html'">← Back to Templates</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Initialize editor
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEditor();
+            
+            // Font size display update
+            document.getElementById('fontSize').addEventListener('input', function() {
+                document.getElementById('fontSizeValue').textContent = this.value;
+            });
+            
+            // Stroke width display update
+            document.getElementById('strokeWidth').addEventListener('input', function() {
+                document.getElementById('strokeWidthValue').textContent = this.value;
+            });
+        });
+    </script>
+</body>
+</html>
