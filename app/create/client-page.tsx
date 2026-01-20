@@ -308,14 +308,3 @@ export default function CreatePage() {
     </Suspense>
   )
 }
-
-export const generateStaticParams = () => {
-  return [
-    { template: '0' },
-    { template: '1' },
-    { template: '2' },
-    { template: '3' },
-    { template: '4' },
-    { template: '5' },
-  ]
-}

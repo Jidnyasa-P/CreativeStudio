@@ -1,13 +1,12 @@
 'use client'
 
-import { useState, useRef, Suspense } from 'react'
+import { useState, useRef, Suspense, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, Download, Wand2, Moon, Sun, Share2 } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import PosterCanvas from '@/components/poster-canvas'
 import PosterShareModal from '@/components/poster-share-modal'
-import Loading from './loading'
 
 interface PosterState {
   heading: string
@@ -62,21 +61,23 @@ function PosterPageContent() {
   const canvasRef = useRef<HTMLDivElement>(null)
 
   // Load shared poster data
-  const shareData = searchParams.get('share')
-  if (shareData) {
-    try {
-      const decoded = JSON.parse(atob(shareData))
-      setPoster(prev => ({
-        ...prev,
-        heading: decoded.h || prev.heading,
-        subheading: decoded.s || prev.subheading,
-        body: decoded.b || prev.body,
-        bgColor: decoded.c || prev.bgColor,
-      }))
-    } catch (error) {
-      console.log('[v0] Failed to load shared poster')
+  useEffect(() => {
+    const shareData = searchParams.get('share')
+    if (shareData) {
+      try {
+        const decoded = JSON.parse(atob(shareData))
+        setPoster(prev => ({
+          ...prev,
+          heading: decoded.h || prev.heading,
+          subheading: decoded.s || prev.subheading,
+          body: decoded.b || prev.body,
+          bgColor: decoded.c || prev.bgColor,
+        }))
+      } catch (error) {
+        console.log('[v0] Failed to load shared poster')
+      }
     }
-  }
+  }, [searchParams])
 
   const toggleDarkMode = () => {
     const html = document.documentElement
