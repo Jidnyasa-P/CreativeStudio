@@ -4,9 +4,15 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "build:prod": "NODE_ENV=production next build",
     "dev": "next dev",
+    "docker:build": "docker build -t creativestudio:latest .",
+    "docker:run": "docker-compose up -d",
+    "docker:stop": "docker-compose down",
     "lint": "eslint .",
-    "start": "next start"
+    "start": "next start",
+    "start:prod": "NODE_ENV=production node server.js",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
